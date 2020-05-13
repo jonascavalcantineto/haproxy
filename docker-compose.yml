@@ -6,7 +6,7 @@ services:
                 restart: always
                 container_name: ocp-haproxy
                 hostname: ocp-haproxy
-                network_mode: host
+                network_mode: bridge
                 ports:
                         - 80:80
                         - 443:443
