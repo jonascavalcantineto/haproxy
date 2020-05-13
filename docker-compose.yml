@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+        lb-proxy:
+                build: .
+                image: lb-proxy:1.0.0
+                restart: always
+                container_name: lb-proxy
+                hostname: lb-proxy
+                ports:
+                        #- 80:80
+                        - 6443:6443
+                        - 22623:22623
