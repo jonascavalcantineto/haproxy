@@ -1,13 +1,14 @@
 version: "3.7"
 services:
-        lb-proxy:
+        ocp-haproxy:
                 build: .
-                image: lb-proxy:1.0.0
+                image: ocp-haproxy:2.1.4
                 restart: always
-                container_name: lb-proxy
-                hostname: lb-proxy
+                container_name: ocp-haproxy
+                hostname: ocp-haproxy
                 network_mode: host
                 ports:
-                        #- 80:80
+                        - 80:80
+                        - 443:443
                         - 6443:6443
                         - 22623:22623
