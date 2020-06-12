@@ -1,17 +1,29 @@
-FROM haproxy:2.1.4
+FROM centos:8.1.1911
 
-RUN export LC_ALL="en_US.UTF-8"
-RUN export LC_CTYPE="en_US.UTF-8"
 
-RUN apt-get update
-RUN apt-get install -y iputils-ping git
+RUN set -ex  \
+        && yum clean all
 
-#Enable LetsEncrypt
-RUN apt-get install -y \
-                certbot \
-                letsencrypt
+RUN yum update -y
+RUN yum install -y \
+                epel-release \
+                haproxy \
+                git \
+                vim \
+                telnet
+
+RUN yum install -y supervisor
+
+RUN set -ex \
+        && cd /opt \
+        && git clone https://github.com/certbot/certbot.git \
+        && cd certbot && echo "y" | ./certbot-auto
 
 ADD scripts/* /
 RUN chmod 755 /*.sh
 
-COPY confs/haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+ADD confs/supervisord.conf /etc/supervisord.conf
+COPY confs/haproxy.cfg /etc/haproxy/haproxy.cfg
+
+
+CMD ["/start.sh"]
