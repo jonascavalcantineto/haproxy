@@ -9,7 +9,7 @@ if [[ $# -lt 2 ]] ; then
 fi
 
 
-/opet/certbot/certbot-auto certonly \
+/opt/certbot/certbot-auto certonly \
         --manual \
         --preferred-challenges=dns \
         --email ${email} \
